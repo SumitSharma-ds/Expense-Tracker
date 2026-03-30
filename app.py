@@ -1,4 +1,3 @@
-import bcrypt
 from flask import Flask, render_template, request, redirect, url_for, session, Response, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date, datetime
@@ -6,6 +5,8 @@ from sqlalchemy import func
 from flask_bcrypt import Bcrypt
 
 app=Flask(__name__)
+
+bcrypt = Bcrypt(app)
 
 app.config['SECRET_KEY']='sumit@sharma'
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///expense_tracker.db'
