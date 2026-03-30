@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            gap:2vh;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(135deg, #dfe9f3, #ffffff);
+        }
+
+        header {
+            background: #f5f5f5;
+            font-family: Arial,sans-serif;
+            padding: 15px 30px;
+            font-size: 22px;
+            font-weight: bold;
+            display: flex;
+        }
+
+        .flash {
+        padding: 0px;
+        margin: 0px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: bold;
+        }
+        
+        .flash.success {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .flash.error {
+            background-color: #f44336;
+            color: white;
+        }
+
+
+        main {
+            padding: 100px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            gap:45px;
+            text-align: center;
+            padding: 4vh 5vh;
+            background: linear-gradient(135deg, #dfe9f3, #ffffff);
+            box-shadow: 
+            8px 8px 15px rgba(0, 0, 0, 0.244),
+            -8px -8px 15px rgba(255, 255, 255, 0.562);
+            animation: fadeIn 0.8s ease;
+            border-radius: 15px;
+            /* height: 60vh;
+            width: 45vh; */
+        }
+
+        input {
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 15px 50px 15px 10px;
+            border-radius: 15px;
+            background: #e0e5ec;
+            color: #333;
+            box-shadow: inset 8px 8px 12px rgba(0,0,0,0.2),
+            inset -8px -8px 12px rgba(255,255,255,0.7);
+        }
+
+        input::placeholder {
+        color: rgb(35, 2, 113);
+        font-weight: bold;
+        }
+
+        input:focus {
+        outline: none;
+        box-shadow: 
+        inset 3px 3px 6px rgba(0,0,0,0.2),
+        inset -3px -3px 6px rgba(255,255,255,0.7),
+        0 0 5px rgba(59,130,246,0.5); 
+        }
+
+        button {
+            width: 100%;
+            height: 5vh;
+            font-size: 20px;
+            font-weight: bold;;
+            border-radius: 10px;
+            border: none;
+            box-shadow:-3px -2px 2px 2px rgba(255, 255, 255, 0.527),1px 1px 4px 0px rgba(0, 0, 0, 0.532);
+            background: #3b82f6; 
+            color: white;
+            border: none;
+            transition: 0.3s;
+        }
+
+        button:hover {
+        background-color: #ff0000;
+        box-shadow: 0 0 0 0,0 0 0 0;
+        }
+
+        a {
+            color: #6a5acd;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                min-width: 35vh;
+                min-height: 30vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h3>Expense Tracker</h3>
+    </header>
+    <main>
+        <form method="POST" action="/register" class="container">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash">
+                        {% for msg in messages %}
+                            <p>{{ msg }}!</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <h1>Welcome</h1>
+            <div class="username field">
+                <input type="text" name="username" placeholder="Username"> 
+            </div>
+            <div class="password field">
+                <input type="password" name="password" placeholder="Password">
+            </div>
+            <div class="btn">
+                <button>Register</button>
+            </div>
+            <div class="register-link">
+                <b>Existing user?</b><a href="/login">Login Here</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

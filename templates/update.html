@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+   <header>
+        <h3>Expense Tracker</h3>
+    </header>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+    <main>
+        <div class="container">
+            <form method="POST"  action="{{ url_for('update', id=e.id) }}" class="login-form">
+                <div class="fields">
+                    <h3 style="font-size: 16px; font-weight: bold;">Update Expense</h3>
+                </div>
+                <div class="description field">
+                    <label>Description</label>
+                    <input type="text" name="description" value="{{e.description}}">
+                </div>
+                <div class="amount field">
+                    <label>Amount</label>
+                    <input type="number" name="amount" value="{{e.amount}}">
+                </div>
+                <div class="date field">
+                    <label>Date</label>
+                    <input type="date" name="date" value="{{ e.date.strftime('%Y-%m-%d') if e.date else '' }}">
+                </div>
+                <div class="category field">
+                    <label>Category</label>
+                    <select name="category" id="categories">
+                        {% for c in category %}
+                        <option value="{{ c }}" {% if c == e.category %}selected{% endif %}>{{c}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="btn">
+                    <button value="update">Update</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #e0e5ec;
+        color: black;
+    }
+
+  
+    header {
+        display: flex;
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        padding: 15px 30px;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+
+    main {
+        max-width: 1000px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        padding: 15px;
+    }
+
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin-top: auto;
+        padding: 70px;
+        /* box-shadow:-3px -2px 8px 4px rgba(255, 255, 255, 0.89),1px 1px 4px 0px rgba(0, 0, 0, 0.785); */
+        gap:30px;
+        border-radius: 30px;
+        text-align: center;
+        box-shadow: 
+        8px 8px 15px rgba(0,0,0,0.2),
+        -8px -8px 15px rgba(255,255,255,0.7);
+        animation: fadeIn 0.8s ease;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        font-weight: bold;
+        gap:5px;
+        padding: 10px;
+    }
+
+    .fields {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input,select {
+        padding: 10px 20px 10px 24px;
+        background: #e0e5ec;
+        color: #333;
+        border-radius: 13px;
+        outline: none;
+        border: none;
+        box-shadow: inset 8px 8px 12px rgba(0,0,0,0.2),
+        inset -8px -8px 12px rgba(255,255,255,0.7);
+    }
+
+    input:focus,select:focus {
+        outline: none;
+        box-shadow: 
+        inset 3px 3px 6px rgba(0,0,0,0.2),
+        inset -3px -3px 6px rgba(255,255,255,0.7),
+        0 0 5px rgba(59,130,246,0.5); 
+    }
+
+    .btn{
+        display: flex;
+        justify-content: center;
+    }
+
+    button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    background: #3b82f6; 
+    font-size: 12px;
+    transition: 0.2s;
+    }
+
+    button:hover {
+    background-color: #4CAF50;
+    transform: translateY(-2px);
+    }
+
+    .flash {
+    padding: 12px;
+    margin: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    }
+
+    .flash.success {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .flash.error {
+        background-color: #f44336;
+        color: white;
+    }
+</style>
+</html>
