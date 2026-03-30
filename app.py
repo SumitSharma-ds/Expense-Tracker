@@ -1,7 +1,9 @@
+import bcrypt
 from flask import Flask, render_template, request, redirect, url_for, session, Response, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import date, datetime
 from sqlalchemy import func
+from flask_bcrypt import Bcrypt
 
 app=Flask(__name__)
 
@@ -48,7 +50,8 @@ def register():
             flash("Username already exists😅")
             return redirect('/register')
         
-        new_user=user(username=username,password=password)
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        new_user = user(username=username, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
 
@@ -62,9 +65,9 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        User=user.query.filter_by(username=username,password=password).first()
+        User=user.query.filter_by(username=username).first()
 
-        if User:
+        if User and bcrypt.check_password_hash(User.password, password):
             session['user_id']=User.id
             return redirect('/')
         
